@@ -7,6 +7,6 @@ users_bp = Blueprint('users_bp', __name__)
 def index():
     return jsonify({'message':'index'})
 
-@app.route('/users')
+@app.route('/cenas')
 def user():
     return jsonify({'message':'hello user'})
