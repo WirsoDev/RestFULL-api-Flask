@@ -16,7 +16,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+from api.admin.views import admin_bp
+from api.users.views import users_bp
+app.register_blueprint(admin_bp)
+app.register_blueprint(users_bp)
 
-@app.route('/')
-def index():
-    return 'HEllo world'
