@@ -4,13 +4,19 @@ import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
 from api.models import User
 from api import db
+from api.authentication.token_required import token_requiered
 
 
 admin_bp = Blueprint('admin_bp', __name__)
 
 
 @app.route('/user', methods=['GET'])
-def get_all_users():
+@token_requiered
+def get_all_users(current_user):
+
+    if not current_user.admin:
+        return jsonify({'message':'Cannot perform that function!'})
+
     users = User.query.all()
 
     output = []
@@ -27,7 +33,8 @@ def get_all_users():
 
 
 @app.route('/user/<public_id>', methods=['GET'])
-def get_one_user(public_id):
+@token_requiered
+def get_one_user(current_user ,public_id):
 
     user = User.query.filter_by(public_id=public_id).first()
 
@@ -44,7 +51,8 @@ def get_one_user(public_id):
 
 
 @app.route('/user', methods=['POST'])
-def create_user():
+@token_requiered
+def create_user(current_user):
     data = request.get_json()
 
     hashed_pass = generate_password_hash(data['password'], method='sha256')
@@ -61,7 +69,8 @@ def create_user():
 
 
 @app.route('/user/<public_id>', methods=['PUT'])
-def promote_user(public_id):
+@token_requiered
+def promote_user(current_user, public_id):
     user = User.query.filter_by(public_id=public_id).first()
 
     if not user:
@@ -77,7 +86,8 @@ def promote_user(public_id):
 
 
 @app.route('/user/<public_id>', methods=['DELETE'])
-def delete_user(public_id):
+@token_requiered
+def delete_user(current_user, public_id):
 
     user = User.query.filter_by(public_id=public_id).first()
 
