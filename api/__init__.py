@@ -18,6 +18,8 @@ db = SQLAlchemy(app)
 
 from api.admin.views import admin_bp
 from api.users.views import users_bp
+from api.authentication.views import auth_bp
 app.register_blueprint(admin_bp)
 app.register_blueprint(users_bp)
+app.register_blueprint(auth_bp)
 
