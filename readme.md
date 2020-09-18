@@ -2,7 +2,7 @@
 ### For learning purposes
 <br>
 
-- Manage login withe JWT ( Json Web Tokens )
+- Manage login with JWT ( Json Web Tokens )
 - manage user privileges as permissions
 - Endpoints GET POST PUT DELETE ...
 - CRUD SQL database
